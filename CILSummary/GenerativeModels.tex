@@ -1,0 +1,20 @@
+\section{Generative Models}
+\subsection*{Variational Autoencoder (VAE)}
+Sample random vector $\mathbf{z} \sim \mathcal{N}(0,\mathbf{I})$. Transform through (deterministic) DNN $F_\theta : \mathbb{R}^m \to \mathbb{R}^n$. Note: expectations $\mathbb{E}_x[f(x)] = \mathbb{E}_z [f(F_\theta(z))]$ (law of the unconscious statistician). Infeasible, would need to find inv. Jacobian determinant\\
+$D_{KL}(P\|Q)=\sum_i P(i)\log\frac{P(i)}{Q(i)}=\mathbb{E}_i [\frac{\log P_i}{\log Q_i}]$ \\
+More general: $p_\theta (\mathbf{x}|\mathbf{z}) $ instead of $F_\theta$: ELBO \\
+$\log p_\theta(x^{(i)})
+% = \mathbb{E}_{z \sim q_\phi (z|x)}[\log p_\theta (x^{(i)})]
+= \mathbb{E}_{z \sim q_\phi (z|x)} \left[\log \frac{p_\theta(z) \cdot p_\theta(x^{(i)}|z)}{p_\theta(z|x^{(i)}}\frac{q_\Phi(z|x^{(i)})}{q_\Phi(z|x^{(i)})} \right] \allowbreak
+= \mathbb{E}_z[\log p_\theta (x^{(i)}|z)] - D_{KL}(q_\Phi(z|x^{(i)}) || p_\theta(z)) + D_{KL}(q_\Phi(z|x^{(i)}) || p_\theta(z|x^{(i)})$ (drop last part)\\
+Update: $\nabla_\theta \mathbb{E}_{q_\phi}[\log p_\theta(x|z)] = \mathbb{E}[\nabla_\theta \log p_\theta(x|z)] \allowbreak \approx \frac 1 L \sum_{r=1}^L \nabla_\theta \log_\theta(x|z^{(r)}), z^{(r)} \sim^{iid} q_\theta (\cdot | x) $\\
+\textbf{Reinforce trick:}\\ $\nabla_\theta\mathbb{E}_{q_\phi}[\mathcal{L}(\mathbf{x}, \mathbf{z})] = \mathbb{E}_{q_\phi}[\mathcal{L}(\mathbf{x}, \mathbf{z}) \nabla_\theta\log q_\theta(\mathbf{z};\mathbf{x})]$
+\textbf{Re-parameterization trick:} use variational distrib. $q_\phi(\mathbf{z};\mathbf{x})=g_\phi(\zeta;\mathbf{x})$ for $\zeta$ simple (e.g. $\zeta \sim \mathcal{N}(\mathbf{0},\mathbf{I}), \mathbf{z}=\mathbf{\mu} + \mathbf{U}\zeta$, then $\mathbf{z}\sim \mathbf{N}(\mathbf{\mu}, \mathbf{UU}^T)$)\\
+\textbf{Stochastic Backprop:} for $\zeta^{(r)} \sim^{iid} \text{simple}$ \\
+$\mathbb{E}_{q_\phi}[\nabla_\phi\mathcal{L}(\mathbf{x}, \mathbf{z})] \approx \frac 1 L \sum_{r=1}^L [\nabla_\phi \mathcal{L}(\mathbf{x}, g_\phi(\zeta^{(r)})] $ 
+\subsection*{Generative Adversarial Network (GAN)}
+$\min_G \max_D V(D,G) = \mathbb{E}_{\mathbf{x}\sim p_{data}(\mathbf{x})}[\log D(\mathbf{x}) ] + \mathbb{E}_{\mathbf{z}\sim p_{\mathbf{z}}(\mathbf{\mathbf{z}})}[\log (1 - D(G(\mathbf{x})) ] \\
+$ $\theta^* := \argmin_{\theta\in \Theta} \{ \sup_{\phi \in \Phi} l(\theta, \phi)\}$
+\textbf{SGD:}  $\theta^{t+1} = \theta^t - \eta \nabla_\theta l(\theta^t, \phi^t)$ ; $\phi^{t+1} = \phi^t + \eta \nabla_\phi l(\theta^{t+1}, \phi^t)$ 
+\subsection*{Autoregressive Models}
+Generate output one variable at a time: $p(x_1, ..., x_m) = \prod_{t=1}^m p(x_t|x_{1:t-1})$ \\\textbf{PixelCNN:} uses exactly that over a window to predict the next pixel (slow process).

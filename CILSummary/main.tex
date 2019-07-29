@@ -1,0 +1,81 @@
+\documentclass[11pt,landscape,a4paper,fleqn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{tikz}
+\usetikzlibrary{shapes,positioning,arrows,fit,calc,graphs,graphs.standard}
+\usepackage[cond]{kpfonts}
+\usepackage[t1]{sourcesanspro}
+%\usepackage[lf]{MyriadPro}
+%\usepackage[lf,minionint]{MinionPro}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage{paralist}
+\usepackage[top=0mm,bottom=3mm,left=1mm,right=1mm]{geometry}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{microtype}
+\usepackage{mathptmx}
+
+% math helpers
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\let\bar\overline
+
+\definecolor{myblue}{cmyk}{0,0,0,0.8}
+\definecolor{myorange}{cmyk}{0,0.81,0.81,0.3}
+
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+\everymath\expandafter{\the\everymath \color{myblue}}
+\everydisplay\expandafter{\the\everydisplay \color{myblue}}
+
+\renewcommand{\baselinestretch}{.8}
+\pagestyle{empty}
+
+\global\mdfdefinestyle{header}{%
+linecolor=gray,linewidth=1pt,%
+leftmargin=0mm,rightmargin=0mm,skipbelow=0mm,skipabove=0mm,
+}
+
+\newcommand{\header}{
+\begin{mdframed}[style=header]
+\footnotesize
+\sffamily
+Cheat sheet\\
+Amray Schwabe,~page~\thepage~of~2
+\end{mdframed}
+}
+
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {.2ex}%
+                                {.2ex}%x
+                                {\color{myorange}\sffamily\small\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{1}{0mm}%
+                                {.2ex}%
+                                {.2ex}%x
+                                {\sffamily\bfseries}}
+
+
+\makeatother
+\setlength{\parindent}{0pt}
+\setlength{\columnsep}{5pt}
+
+\begin{document}
+\small
+\fontdimen2\font=0.3ex
+\begin{multicols*}{4}
+\input{Essentials}
+\input{DimensionalityReduction}
+\input{SVD}
+\input{Optimization}
+\input{NMF}
+\input{WordEmbedding}
+\input{KMeans}
+\input{GaussianMixtureModel}
+\input{ConvolutionalNN}
+\input{CILSummary/GenerativeModels.tex}
+\input{SparseCoding}
+\end{multicols*}
+\end{document}
