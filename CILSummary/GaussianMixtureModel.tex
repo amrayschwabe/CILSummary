@@ -31,6 +31,7 @@ How to find $\mu_k^{(t)}$: $\frac{\delta}{\delta\mu_k}{\sum_{n=1}^N\sum_{k=1}^K 
 \subsection*{Gaussian distribution}
 Covariance matrix $\Sigma$, Mean $\mu$ \\
 $f(x) = \frac{1}{2\pi \sqrt{|\Sigma|}} e^{- \frac{1}{2} (x-\mu)^T \Sigma^{-1} (x-\mu)}$
+$\int \mathcal{N}(z;\mu, \sigma^2)log(\mathcal{N}(z;0,I)) dz = \mathbb{E}_z (\mathcal{N}(z;0,I)) = -\frac{J}{2} log(2*\pi) - \frac{1}{2}\sum_{j=1}^J(\mu_j^2 + \sigma_j^2)$
 
 \subsection*{Discussion K-means vs. EM}
 hard assignment vs soft. sherical clusters shapes vs covariance matrix. fast vs slow and more iteration. K-means can be used as initialization for EM.\\

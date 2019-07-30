@@ -6,7 +6,7 @@ More general: $p_\theta (\mathbf{x}|\mathbf{z}) $ instead of $F_\theta$: ELBO \\
 $\log p_\theta(x^{(i)})
 % = \mathbb{E}_{z \sim q_\phi (z|x)}[\log p_\theta (x^{(i)})]
 = \mathbb{E}_{z \sim q_\phi (z|x)} \left[\log \frac{p_\theta(z) \cdot p_\theta(x^{(i)}|z)}{p_\theta(z|x^{(i)}}\frac{q_\Phi(z|x^{(i)})}{q_\Phi(z|x^{(i)})} \right] \allowbreak
-= \mathbb{E}_z[\log p_\theta (x^{(i)}|z)] - D_{KL}(q_\Phi(z|x^{(i)}) || p_\theta(z)) + D_{KL}(q_\Phi(z|x^{(i)}) || p_\theta(z|x^{(i)})$ (drop last part)\\
+= \mathbb{E}_z[\log p_\theta (x^{(i)}|z)] - D_{KL}(q_\Phi(z|x^{(i)}) || p_\theta(z)) + D_{KL}(q_\Phi(z|x^{(i)}) || p_\theta(z|x^{(i)})$ (drop last part, first part ensures reconstruction quality, second part ensures that posterior is close to prior. Expect. can be added because exp over z does not change x)\\
 Update: $\nabla_\theta \mathbb{E}_{q_\phi}[\log p_\theta(x|z)] = \mathbb{E}[\nabla_\theta \log p_\theta(x|z)] \allowbreak \approx \frac 1 L \sum_{r=1}^L \nabla_\theta \log_\theta(x|z^{(r)}), z^{(r)} \sim^{iid} q_\theta (\cdot | x) $\\
 \textbf{Reinforce trick:}\\ $\nabla_\theta\mathbb{E}_{q_\phi}[\mathcal{L}(\mathbf{x}, \mathbf{z})] = \mathbb{E}_{q_\phi}[\mathcal{L}(\mathbf{x}, \mathbf{z}) \nabla_\theta\log q_\theta(\mathbf{z};\mathbf{x})]$
 \textbf{Re-parameterization trick:} use variational distrib. $q_\phi(\mathbf{z};\mathbf{x})=g_\phi(\zeta;\mathbf{x})$ for $\zeta$ simple (e.g. $\zeta \sim \mathcal{N}(\mathbf{0},\mathbf{I}), \mathbf{z}=\mathbf{\mu} + \mathbf{U}\zeta$, then $\mathbf{z}\sim \mathbf{N}(\mathbf{\mu}, \mathbf{UU}^T)$)\\
