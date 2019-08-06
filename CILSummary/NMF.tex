@@ -10,13 +10,13 @@ $p(w, d) = \sum_z p(z)p(w | z) p(d | z)$
 Log-Likelihood: $L(\mathbf{U}, \mathbf{V}) = \sum_{i,j} x_{i,j}\log p(w_j|d_i) \\
 = \sum_{(i,j) \in X} \log \sum_{z=1}^K p(w_j|z)p(z|d_i)$ \\ 
 $ p(w_j|z) = v_{zj}$, $p(z|d_i) = u_{zi}$, $\sum_j^N v_{zj} = \sum_z^K u_{zi} = 1$\\
-Lower bound: we define $p(z=i|wd) = q_{iwd}$. Then we have a lower bound (because of jensens inequality) of $g(X,U,V) =  \sum_{w,d}q_{iwd}X_{wd}(log(p(u_{wi}))+log(p(v_{id}))-log(q_{iwd}))\leq L(U,V)$ \\
+Lower bound: we define $p(z|d_i,w_j) = q_{zij}$. Then we have a lower bound (because of jensens inequality) of $g(X,U,V) =  \sum_{i,j \in X}  \sum_{z=1}^K q_{zij}( log(v_{zj})+ log(u_{zi}) - log(q_{zij})) \leq L(U,V)$ \\
 E-Step (optimal q):\\
 $q_{zij} = \frac{p(w_j|z)p(z|d_i)}{\sum_{k=1}^K p(w_j|k)p(k|d_i)} := \frac{v_{zj}u_{zi}}{\sum_{k=1}^K v_{kj}u_{ki}}$\\
 M-Steps:\\
 $p(z|d_i) = \frac{\sum_j x_{ij}q_{zij}}{\sum_j x_{ij}}, p(w_j|z) = \frac{\sum_i x_{ij}q_{zij}}{\sum_{i,l}x_{il}q_{zil}}$\\
 How to get this: \\
-maximize lower bound wrt. $\sum_w u_{wi} = 1$ and $\sum_i v_{di}=1$ $\rightarrow$ add lagrangian multipliers. $min_{U,V}max_{\alpha,\beta}-g(X,U,V)+\sum_i \alpha (\sum_w u_{wi}-1)+ \sum_d \beta(\sum_i v_{di}) \rightarrow \frac{\delta L}{\delta u_{wi}} = 0 \rightarrow u_{wi} = \sum_d \frac{X_{wd}w_{iwd}}{\alpha_i}$ then set $\frac{\delta L}{\delta \alpha_i}$ to zero: $\sum_w u_{wi} = 1 \rightarrow \sum_{w,d}\frac{X_{wd}q_{iwd}}{\alpha_i}= 1 \rightarrow \alpha_i^{-1} = \sum_{w,d} X_{wd}q_{iwd} \rightarrow u_{wi} = \frac{\sum_d X_{wd}q_{iwd}}{\sum_{dw}X_{wd}q_{iwd}}$ Similar derivation for v. One extra step: $\sum_{iw}X_{wd}q_{iwd}/\beta_d = 1 \rightarrow \sum_w X_{wd} \sum_i q_{iwd} / \beta_d = 1$, here $\sum_i q_{iwd} = 1$ and we get $\beta_d^{-1} = \sum_w X_{wd}$
+maximize lower bound wrt. $\sum_z u_{zi} = 1$ and $\sum_j v_{zj}=1$ $\rightarrow$ add lagrangian multipliers. $min_{U,V}max_{\alpha,\beta}-g(X,U,V)+\sum_j \alpha (\sum_z u_{zi}-1)+ \sum_i \beta(\sum_j v_{zj}) \rightarrow \frac{\delta L}{\delta u_{zi}} = 0 \rightarrow u_{zi} = \sum_j \frac{X_{ij}q_{zij}}{\alpha_z}$ then sum up to 1: $\sum_i u_{zi} = 1 \rightarrow \sum_{i,j}\frac{X_{ij}q_{zij}}{\alpha_z}= 1 \rightarrow \alpha_z^{-1} = \sum_{i,j} X_{ij}q_{zij} \rightarrow u_{zi} = \frac{\sum_j X_{ij}q_{zij}}{\sum_{ji}X_{ij}q_{zij}}$ Similar derivation for v. One extra step: $\sum_{zi}X_{ij}q_{zij}/\beta_i = 1 \rightarrow \sum_j X_{ij} \sum_z q_{zij} / \beta_i = 1$, here $\sum_z q_{zij} = 1$ and we get $\beta_j^{-1} = \sum_i X_{ij}$
 
 \subsection*{Latent Dirichlet Allocation}
 To sample a new document, we need to extend $X$ and $U^T$ with a new row, s.t. $X=U^T V$. pLSA fixes both dimensions.\\
