@@ -12,8 +12,8 @@ $\text{posterior } p(A|B)=\frac{\text{prior } p(A)\ \times \ \text{likelihood } 
 $p_\theta(\mathbf{X}) = \prod_{n=1}^N p_\theta(\mathbf{x}_n) = \prod_{n=1}^N \left(\sum_{k=1}^K \pi_k p_{\theta_k}(\mathbf{x}_n)\right)$
 \textbf{Max. Likelihood Estimation (MLE):}\\
 $\argmax_\theta\sum_{n=1}^N \log \left( \sum_{k=1}^K \pi_k p_{\theta_k}(\mathbf{x}_n)\right)\\
-\ge \sum_{n=1}^N \sum_{k=1}^K{q_k[\log p_{\theta_k}(\mathbf{x}_n) + \log \pi_k - \log q_k]}$\\
-with $\sum_{k=1}^K{q_k} = 1$ by Jensen Inequality.
+\ge \sum_{n=1}^N \sum_{k=1}^K{q_{k,n}[\log p_{\theta_k}(\mathbf{x}_n) + \log \pi_k - \log q_{k,n}]}$\\
+with $\sum_{k=1}^K{q_{k,n}} = 1$ by Jensen Inequality.
 
 \subsection*{Generative Model}
 1. sample cluster index $j \sim Categorical(\pi)$\\
@@ -31,6 +31,7 @@ How to find $\mu_k^{(t)}$: $\frac{\delta}{\delta\mu_k}{\sum_{n=1}^N\sum_{k=1}^K 
 \subsection*{Gaussian distribution}
 Covariance matrix $\Sigma$, Mean $\mu$ \\
 $f(x) = \frac{1}{2\pi \sqrt{|\Sigma|}} e^{- \frac{1}{2} (x-\mu)^T \Sigma^{-1} (x-\mu)}$
+Derivative: $\frac{-1}{2}(\Sigma_k^{-1}-\Sigma_k^{-1}(x_n-\mu_k)(x_n-\mu_k)^T\Sigma_k^{-1})$
 $\int \mathcal{N}(z;\mu, \sigma^2)log(\mathcal{N}(z;0,I)) dz = \mathbb{E}_z (\mathcal{N}(z;0,I)) = -\frac{J}{2} log(2*\pi) - \frac{1}{2}\sum_{j=1}^J(\mu_j^2 + \sigma_j^2)$
 
 \subsection*{Discussion K-means vs. EM}

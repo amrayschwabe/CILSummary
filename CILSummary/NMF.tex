@@ -4,13 +4,13 @@
 \textbf{Conditional independence assumption ($*$):}\\
 $p(w|d) = \sum_z p(w,z|d) = \sum_z p(w|d,z)p(z|d) \stackrel{*}{=} \sum_z p(w|z)p(z|d)$\\
 \textbf{Symmetric parameterization:}\\
-$p(w, d) = \sum_z p(z)p(w | z) p(d | z)$
-
+$p(w, d) = \sum_z p(z)p(w | z) p(d | z)$\\
+\textbf{Sample} 1)Sample topic for each token (p(z|d)) 2) sample token for each topic (p(w|z))
 \subsection*{EM for pLSA}
 Log-Likelihood: $L(\mathbf{U}, \mathbf{V}) = \sum_{i,j} x_{i,j}\log p(w_j|d_i) \\
-= \sum_{(i,j) \in X} \log \sum_{z=1}^K p(w_j|z)p(z|d_i)$ \\ 
+= \sum_{i,j}x_{i,j} \log \sum_{z=1}^K p(w_j|z)p(z|d_i)$ \\ 
 $ p(w_j|z) = v_{zj}$, $p(z|d_i) = u_{zi}$, $\sum_j^N v_{zj} = \sum_z^K u_{zi} = 1$\\
-Lower bound: we define $p(z|d_i,w_j) = q_{zij}$. Then we have a lower bound (because of jensens inequality) of $g(X,U,V) =  \sum_{i,j \in X}  \sum_{z=1}^K q_{zij}( log(v_{zj})+ log(u_{zi}) - log(q_{zij})) \leq L(U,V)$ \\
+Lower bound: we define $p(z|d_i,w_j) = q_{zij}$. Then we have a lower bound (because of jensens inequality) of $g(X,U,V) =  \sum_{i,j} x_{i,j}  \sum_{z=1}^K q_{zij}( log(v_{zj})+ log(u_{zi}) - log(q_{zij})) \leq L(U,V)$ \\
 E-Step (optimal q):\\
 $q_{zij} = \frac{p(w_j|z)p(z|d_i)}{\sum_{k=1}^K p(w_j|k)p(k|d_i)} := \frac{v_{zj}u_{zi}}{\sum_{k=1}^K v_{kj}u_{ki}}$\\
 M-Steps:\\
